@@ -1,7 +1,8 @@
 # AI Usage Report
 
 ## 1. AI Tools Used
-- **Google Gemini (Android Studio Sidekick)**: Primary AI assistant for architectural guidance, boilerplate generation, and Gradle troubleshooting.
+- **Google Gemini (Android Studio AI Agent)**: Primary assistant for project scaffolding, Gradle troubleshooting, and specific Android implementation guidance.
+- **ChatGPT (OpenAI)**: Utilized for high-level architecture discussions, documentation drafting, repository review, debugging guidance, interview preparation, and comprehensive code review suggestions.
 
 ## 2. Where AI Was Used
 - **Project Scaffolding**: Creating the initial folder structure and package hierarchy.
