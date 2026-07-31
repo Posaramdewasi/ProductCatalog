@@ -36,5 +36,5 @@ The codebase is clean, well-documented, and follows Google's recommended best pr
 ## 🛠 Recommendations for Future Improvements
 1. **Search Functionality**: Add a search bar to filter the local/remote list.
 2. **Category Tabs**: Utilize the `/products/categories` endpoint to group items.
-3. **Unit Tests**: Implement JUnit and MockK tests for the Repository and Use Cases.
+3. **Favorites**: Implement local bookmarking of products.
 4. **Dark Mode**: Add support for Material Design 3 dark themes.

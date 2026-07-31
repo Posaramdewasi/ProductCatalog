@@ -10,6 +10,8 @@ A production-ready Android application showcasing a product catalog using the [F
 - **Offline Support**: Robust caching mechanism using Room Database to view previously loaded data without an internet connection.
 - **Error Handling**: Graceful handling of network timeouts, no-connectivity states, and API errors with easy retry options.
 - **Modern UI**: Material Design 3 components with a clean, responsive layout.
+- **Unit Tested**: Core logic in Repositories and ViewModels is covered by unit tests.
+- **CI/CD**: Integrated GitHub Actions for automated build and test validation.
 
 ## 🛠 Tech Stack
 
@@ -22,27 +24,16 @@ A production-ready Android application showcasing a product catalog using the [F
 - **Image Loading**: [Coil](https://coil-kt.github.io/coil/)
 - **Asynchronous Programming**: [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html)
 
-## 🏗 Architecture & Project Structure
+## 🏗 Architecture & Flow
 
 The project follows **Clean Architecture** principles to ensure maintainability, testability, and scalability.
 
-```
-com.example.productcatalog
-├── data
-│   ├── api          # Retrofit API interfaces
-│   ├── db           # Room Database, Entities, and DAOs
-│   ├── mapper       # Mappers between DTOs and Entities
-│   ├── model        # Data Transfer Objects (DTOs)
-│   └── repository   # Repository implementations
-├── di               # Hilt Dependency Injection modules
-├── domain
-│   └── repository   # Repository interfaces (Domain boundary)
-├── ui
-│   ├── adapter      # RecyclerView adapters
-│   ├── detail       # Product Detail UI and ViewModel
-│   └── home         # Home Screen UI and ViewModel
-└── utils            # Generic helpers (Resource wrapper)
-```
+### Data Flow
+`UI (Activity/Fragment)` ↔ `ViewModel` ↔ `Repository` ↔ `Retrofit (Remote)` OR `Room (Local Cache)`
+
+1. **Presentation Layer**: UI reacts to state changes exposed via `StateFlow` from the ViewModel.
+2. **Domain Layer**: Defines the business contract via Repository interfaces.
+3. **Data Layer**: Orchestrates data between the Fake Store API and the Room database. It implements the "Offline-First" strategy by attempting a network fetch and falling back to the local cache on failure.
 
 ## 📶 Offline Support Strategy
 
@@ -53,28 +44,47 @@ The app implements an **Offline-First** approach:
 4. **Fallback**: If the network fetch fails (No internet, Timeout), the Repository automatically queries the local database and returns the cached results.
 5. **UI State**: The user is only shown an error state if *both* the network and the local cache are unavailable.
 
+## 🌐 API
+
+This project consumes the **Fake Store API**.
+- **Base URL**: `https://fakestoreapi.com/`
+- **Endpoints Used**:
+    - `GET /products`: Fetch all products.
+    - `GET /products/{id}`: Fetch details for a specific product.
+- **Documentation**: [https://fakestoreapi.com/docs](https://fakestoreapi.com/docs)
+
 ## ⚙️ Setup Instructions
 
-1. Clone the repository.
-2. Open the project in **Android Studio (Ladybug or newer)**.
-3. Ensure you have **JDK 21** configured in Gradle settings.
-4. Sync the project with Gradle files.
-5. Run the app on an emulator or physical device.
+- **Android Studio**: Ladybug (2024.2.1) or newer.
+- **JDK**: 21 (Ensure this is configured in File > Settings > Build, Execution, Deployment > Build Tools > Gradle).
+- **Minimum SDK**: 24
+- **Compile SDK**: 37
 
-## 🤖 AI Usage Summary
-
-This project utilized AI assistance for boilerplate generation, architectural scaffolding, and troubleshooting Gradle configuration issues related to AGP 9.x. All AI-generated code was reviewed, refactored, and improved by a Senior Engineer to ensure production standards.
+1. Clone the repository: `git clone https://github.com/[username]/ProductCatalog.git`
+2. Open the project in Android Studio.
+3. Perform a **Gradle Sync**.
+4. Run the `app` module on an emulator or physical device.
 
 ## 🔄 Continuous Integration
 
 This project uses **GitHub Actions** for automated CI/CD.
 - **Automatic Build**: Every push or pull request triggers a full project build to ensure compilation success.
 - **Automatic Unit Tests**: The entire test suite is executed automatically to prevent regressions.
-- **Gradle Caching**: Optimized workflow execution time using GitHub's runner cache.
 
-## ⚠️ Known Limitations & Future Improvements
+## 🤖 AI Usage Summary
 
-- **API Pagination**: The Fake Store API does not support server-side pagination; lazy loading is implemented client-side.
-- **Search & Filter**: Future versions could include product searching and category filtering.
-- **Unit Testing**: Adding comprehensive unit tests for ViewModels and Repositories.
-- **UI Components**: Implementing a dedicated "Favorite" feature to save products locally.
+This project utilized AI assistance for boilerplate generation, architectural scaffolding, and troubleshooting Gradle configuration issues. The developer reviewed, understood, modified where necessary, and validated all AI-generated suggestions before including them to ensure they met production standards and specific project requirements.
+
+## 📸 Screenshots
+
+*Screenshots will be available in the `screenshots/` directory.*
+- Home Screen Placeholder
+- Product Detail Screen Placeholder
+
+## ⚠️ Future Improvements
+
+- **Search**: Real-time product search functionality.
+- **Category Filter**: Filtering products by category using API endpoints.
+- **Favorites**: Ability to bookmark products locally.
+- **Dark Mode**: Complete Material 3 dark theme implementation.
+- **KSP Migration**: Migrating from `kapt` to `ksp` for faster processing.
